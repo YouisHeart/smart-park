@@ -1,0 +1,37 @@
+.login {
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login .lgbg {
+  width: 1200px;
+  height: 720px;
+}
+
+.login .lgbg .part {
+  width: 364px;
+  height: 720px;
+  padding: 140px 20px 0 20px;
+  background-color: white;
+  margin-left: auto;
+}
+
+.login .lgbg .part .title {
+  margin-bottom: 50px;
+}
+
+.login .lgbg .part .title .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login .lgbg .part .title h1 {
+  text-align: center;
+  color: #027cc5;
+  margin-top: 40px;
+}
