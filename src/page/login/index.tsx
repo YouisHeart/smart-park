@@ -2,9 +2,24 @@ import bg from "../../assets/bg.jpg"
 import logo from "../../assets/logo.png"
 import lgbg from "../../assets/lgbg.jpg"
 import "./index.scss"
+import http from "../../utils/http/http"
 import { Button, Form, Input } from 'antd';
-import { UserOutlined,LockOutlined } from "@ant-design/icons"
+import { UserOutlined, LockOutlined } from "@ant-design/icons"
+import { useEffect } from "react"
+import { login } from "../../api/user"
 function Login() {
+    const [form] = Form.useForm();
+    function handleLogin() {
+        // console.log(form)
+        form.validateFields().then(async (res) => {
+            const data = await login(res);
+            console.log(data)
+        }).catch((err) => {
+            console.log("err是",err)
+        })
+    }
+
+
     return <div className="login" style={{ backgroundImage: `url(${bg})` }}>
         <div className="lgbg" style={{ backgroundImage: `url(${lgbg})` }} > 
             <div className="part">
@@ -14,10 +29,15 @@ function Login() {
                     </div>
                     <h1>安卓智慧小区管理平台</h1>
                 </div>
-                <Form>
+                <Form
+                    form={form}
+                >
                     <Form.Item
                         name="username"
-                        rules={[{ required: true, message: '用户名不能为空' }]}
+                        rules={[
+                            { required: true, message: '用户名不能为空' },
+                            { min: 2, message: '用户名长度不能小于2位' }
+                        ]}
                     >
                         <Input placeholder="请输入您的用户名" prefix={<UserOutlined />}/>
                     </Form.Item>
@@ -30,7 +50,12 @@ function Login() {
                     </Form.Item>
 
                     <Form.Item label={null}>
-                        <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            style={{ width: "100%" }}
+                            onClick={ handleLogin }
+                        >
                             登录
                         </Button>
                     </Form.Item>
