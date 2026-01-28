@@ -1,6 +1,6 @@
 function Settings() {
     return <div>
-        我是系统设置
+        我是保修管理
     </div>
 }
 

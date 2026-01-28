@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 export const authSlice = createSlice({
     name: "auth",
     initialState: {
-        token: sessionStorage.getItem("token") || null
+        token: sessionStorage.getItem("token") || null,
+        menuList:[]
     },
     reducers: {
         setToken: (state, action) => {
@@ -13,9 +14,12 @@ export const authSlice = createSlice({
         removeToken: (state) => {
             state.token = null;
             sessionStorage.removeItem("token");
+        },
+        setMenu:(state,action)=>{
+            state.menuList = action.payload
         }
     }
 })
 
-export const { setToken, removeToken } = authSlice.actions;
+export const { setToken, removeToken, setMenu } = authSlice.actions;
 export default authSlice.reducer;

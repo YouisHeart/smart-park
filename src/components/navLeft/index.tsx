@@ -14,7 +14,9 @@ import { useState, useEffect } from 'react';
 import icons from './iconList'
 import logo from '../../assets/logo.png'
 import "./index.scss"
-
+import { setMenu } from "../../store/login/authSlice"
+import { useDispatch } from "react-redux"
+ 
 interface MenuItem {
     key: string;
     label: string;
@@ -30,6 +32,7 @@ interface MenuItemFromData {
 }
 
 function NavLeft() {
+    const dispatch = useDispatch();
     const [menuData, setMenuData] = useState<MenuProps['items']>([]) 
 
     useEffect(() => {
@@ -38,6 +41,7 @@ function NavLeft() {
 
     async function configMenu() {
         const { data } = await getMenu()
+        dispatch(setMenu(data))
         const mappedMenuItems = mapMenuItems(data)
         setMenuData(mappedMenuItems)
     }
