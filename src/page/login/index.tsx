@@ -7,14 +7,27 @@ import { Button, Form, Input } from 'antd';
 import { UserOutlined, LockOutlined } from "@ant-design/icons"
 import { useEffect } from "react"
 import { login } from "../../api/user"
+import { setToken } from "../../store/login/authSlice"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 function Login() {
-    const [form] = Form.useForm();
+    const [form] = Form.useForm(); 
+    const [loading, setLoading] = useState<boolean>(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     function handleLogin() {
         // console.log(form)
         form.validateFields().then(async (res) => {
-            const data = await login(res);
-            console.log(data)
+            setLoading(true);
+            const { data: { token,username } } = await login(res);
+            setLoading(false);
+            dispatch(setToken(token))
+            sessionStorage.setItem("username",username)
+            // 跳转首页的时候不能留历史记录
+            navigate("/",{ replace: true })
         }).catch((err) => {
+            setLoading(false);
             console.log("err是",err)
         })
     }
@@ -54,7 +67,8 @@ function Login() {
                             type="primary"
                             htmlType="submit"
                             style={{ width: "100%" }}
-                            onClick={ handleLogin }
+                            onClick={handleLogin}
+                            loading={loading}
                         >
                             登录
                         </Button>
