@@ -16,7 +16,7 @@ export function generateRoutes(menu:MenuType[]):RouteObject[]{
         };
         if(item.children) {
             routerObj.children = generateRoutes(item.children)
-        }
+        }     
         return routerObj
     })
 }
