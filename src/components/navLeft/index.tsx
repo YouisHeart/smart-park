@@ -1,21 +1,12 @@
 import { Menu } from 'antd';
-import {
-    AppstoreOutlined,
-    ContainerOutlined,
-    DesktopOutlined,
-    MailOutlined,
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    PieChartOutlined,
-} from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { getMenu } from '../../api/user';
 import { useState, useEffect } from 'react';
 import icons from './iconList'
 import logo from '../../assets/logo.png'
 import "./index.scss"
-import { setMenu } from "../../store/login/authSlice"
-import { useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
+import { useNavigate } from 'react-router-dom';
  
 interface MenuItem {
     key: string;
@@ -32,17 +23,15 @@ interface MenuItemFromData {
 }
 
 function NavLeft() {
-    const dispatch = useDispatch();
+    const { menuList } = useSelector((state:any)=>state.authSlice)
     const [menuData, setMenuData] = useState<MenuProps['items']>([]) 
-
+    const navigate = useNavigate()
     useEffect(() => {
         configMenu()
-    }, [])
+    }, [menuList])
 
     async function configMenu() {
-        const { data } = await getMenu()
-        dispatch(setMenu(data))
-        const mappedMenuItems = mapMenuItems(data)
+        const mappedMenuItems = mapMenuItems(menuList)
         setMenuData(mappedMenuItems)
     }
     //  将返回的菜单数据转化成我们需要的格式
@@ -55,6 +44,9 @@ function NavLeft() {
 
         }))
     }
+    function handleClick({ key }: { key: string }) {
+        navigate(key)
+    }
     return <div className="navleft">
         <div className="logo">
             <img src={logo} alt="" width={18} />
@@ -65,6 +57,7 @@ function NavLeft() {
             mode="inline"
             theme="dark"
             items={menuData}
+            onClick={handleClick}
         />
     </div>
 }
