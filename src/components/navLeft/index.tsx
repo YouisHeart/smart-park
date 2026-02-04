@@ -6,7 +6,7 @@ import icons from './iconList'
 import logo from '../../assets/logo.png'
 import "./index.scss"
 import { useSelector } from "react-redux"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
  
 interface MenuItem {
     key: string;
@@ -26,6 +26,8 @@ function NavLeft() {
     const { menuList } = useSelector((state:any)=>state.authSlice)
     const [menuData, setMenuData] = useState<MenuProps['items']>([]) 
     const navigate = useNavigate()
+    const location = useLocation()
+    // const selectedKey = location.pathname
     useEffect(() => {
         configMenu()
     }, [menuList])
@@ -58,6 +60,7 @@ function NavLeft() {
             theme="dark"
             items={menuData}
             onClick={handleClick}
+            selectedKeys={[location.pathname]}
         />
     </div>
 }

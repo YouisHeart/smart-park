@@ -4,6 +4,7 @@ import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { removeToken } from '../../store/login/authSlice'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 
 const items: MenuProps['items'] = [
     {
@@ -27,9 +28,10 @@ const items: MenuProps['items'] = [
 ];
 function MyHeader() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const onClick: MenuProps['onClick'] = ({ key }) => {
         if (key == "1") {
-            
+            navigate("/personal")
         } else {
             dispatch(removeToken());
             sessionStorage.removeItem('username');
