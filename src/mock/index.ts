@@ -4,7 +4,6 @@ Mock.setup({
 })
 //登录接口
 Mock.mock("https://www.demo.com/login", "post", (options: any) => {
-    //console.log("options",options.body)
     const { username, password } = JSON.parse(options.body)
     if (username === "admin" && password === "admin123") {
         return {
@@ -459,7 +458,6 @@ Mock.Random.extend({
 //租户列表的接口
 Mock.mock("https://www.demo.com/userList", "post", (options: any) => {
     const { pageSize, page, companyName, contact, phone } = JSON.parse(options.body)
-    console.log("租户列表接收到参数", page, pageSize, companyName, contact, phone)
     return {
         code: 200,
         message: "成功",
@@ -486,7 +484,6 @@ Mock.mock("https://www.demo.com/userList", "post", (options: any) => {
 //删除企业
 Mock.mock('https://www.demo.com/deleteUser', 'post', (options: any) => {
     const { id } = JSON.parse(options.body);
-    console.log("删除企业", id);
     return {
         code: 200,
         message: "成功",
@@ -497,7 +494,6 @@ Mock.mock('https://www.demo.com/deleteUser', 'post', (options: any) => {
 //批量删除企业
 Mock.mock('https://www.demo.com/batchDeleteUser', 'post', (options: any) => {
     const { ids } = JSON.parse(options.body);
-    console.log("ids", ids)
     return {
         code: 200,
         message: "成功",
@@ -506,7 +502,6 @@ Mock.mock('https://www.demo.com/batchDeleteUser', 'post', (options: any) => {
 })
 //编辑企业
 Mock.mock('https://www.demo.com/editUser', 'post', (options: any) => {
-    console.log("编辑企业收到参数", JSON.parse(options.body))
     return {
         code: 200,
         message: "成功",
@@ -530,7 +525,7 @@ function generateRooms() {
     return rooms;
 }
 Mock.mock('https://www.demo.com/roomList', 'post', (options: any) => {
-    console.log("收到房间id", JSON.parse(options.body).roomid)
+   
     return {
         code: 200,
         message: "成功",
@@ -543,7 +538,6 @@ Mock.mock('https://www.demo.com/roomList', 'post', (options: any) => {
 //合同管理
 Mock.mock('https://www.demo.com/contractList', 'post', (options: any) => {
     const { page, pageSize } = JSON.parse(options.body);
-    console.log("后端合同管理接到参数", JSON.parse(options.body))
     return {
         code: 200,
         message: "成功",
@@ -567,7 +561,7 @@ Mock.mock('https://www.demo.com/contractList', 'post', (options: any) => {
 //账单管理
 Mock.mock('https://www.demo.com/billList', 'post', (options: any) => {
     const { page, pageSize, companyName, contact, phone } = JSON.parse(options.body);
-    console.log("后端账单管理接到参数", JSON.parse(options.body))
+
     return {
         code: 200,
         message: "成功",
@@ -595,7 +589,7 @@ Mock.mock('https://www.demo.com/billList', 'post', (options: any) => {
 //账号管理
 Mock.mock('https://www.demo.com/accountList', 'post', (options: any) => {
     //  const {page,pageSize,companyName,contact,phone}=JSON.parse(options.body);
-    console.log("后端账号管理接到参数", options)
+
     return {
         code: 200,
         message: "成功",

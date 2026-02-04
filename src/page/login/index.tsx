@@ -17,7 +17,7 @@ function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     function handleLogin() {
-        // console.log(form)
+      
         form.validateFields().then(async (res) => {
             setLoading(true);
             const { data: { token,username } } = await login(res);
@@ -28,7 +28,6 @@ function Login() {
             navigate("/",{ replace: true })
         }).catch((err) => {
             setLoading(false);
-            console.log("err是",err)
         })
     }
 
