@@ -1,7 +1,7 @@
 import { Row,Col,Card,Progress,Statistic, Timeline,Tag } from "antd"
 import { RadarChartOutlined,SnippetsOutlined,DollarOutlined,LaptopOutlined } from "@ant-design/icons";
 import ReactECharts from "echarts-for-react"
-import { getEnergyData } from "../../api/dashboard"
+import { getEnergyData } from "@/api/dashboard"
 import { useEffect,useState } from "react";
 import "./index.scss"
 
@@ -128,7 +128,8 @@ function Dashboard() {
                 },
                 series: dataList
             }
-            console.log(data)
+            console.log("后端返回的数据：",data)
+            console.log("更新后的数据：",updateOption)
             setData(updateOption)
         }
         loadData()

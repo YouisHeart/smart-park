@@ -28,7 +28,6 @@ function App() {
         const router = createBrowserRouter(routes)
         setRouter(router)
       }
-     
     }
     loadData()
   },[token])
