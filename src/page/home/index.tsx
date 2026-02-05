@@ -20,7 +20,7 @@ function Home() {
                 <Header style={{ paddingRight: "20px", background: colorBgContainer, textAlign:'right' }}>
                     <MyHeader></MyHeader>
                 </Header>
-                <Content style={{ margin: '0 16px' }}>
+                <Content style={{ margin: '0 16px', height:"90vh", overflowY:"auto", overflow:"hidden" }}>
                     <MyBreadCrumb></MyBreadCrumb>
                     <Outlet></Outlet>
                 </Content>
