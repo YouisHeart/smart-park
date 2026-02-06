@@ -1,6 +1,6 @@
 import { Card,Row,Col,Input,Button,Table,Pagination,Tag,Popconfirm,message } from "antd"
 import type { TableProps, PaginationProps } from "antd"
-import { useEffect, useState,useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import type { DataType } from "./interface";
 import { getUserList,deleteUser,batchDeleteUser } from "../../api/userList";
 import UserForm from "./userForm";
@@ -34,6 +34,7 @@ function Users() {
   const [loading,setLoading]=useState<boolean>(false);
   const [selectedRowKeys,setSelectedRowKeys]=useState<React.Key[]>([])
   const [isModalOpen,setIsModalOpen]=useState<boolean>(false)
+  const [title,setTitle]=useState<string>("")
   const [formData,setFormData]=useState<searchType>({
     companyName:"",
     contact:"",
@@ -65,7 +66,6 @@ function Users() {
   }
 
   const onSelectChange=(selectedRowKeys:React.Key[], selectedRows:any)=>{
-    // console.log(selectedRowKeys,selectedRows)
     setSelectedRowKeys(selectedRowKeys)
   }
 
@@ -99,6 +99,24 @@ function Users() {
     message.success(data)
     loadData()
   }
+
+  const edit=(record:DataType)=>{
+    setIsModalOpen(true)
+    setTitle("编辑企业")
+  }
+
+  const add=()=>{
+    setIsModalOpen(true)
+    setTitle("新增企业")
+  }
+
+  // const hideModal=()=>{
+  //   setIsModalOpen(false)
+  // }
+
+  const hideModal=useCallback(()=>{
+    setIsModalOpen(false)
+  },[])
 
   const columns:TableProps<DataType>['columns'] = [
   {
@@ -168,7 +186,7 @@ function Users() {
     key: 'operate',
     render(value, record, index) {
       return <>
-        <Button type="primary" size="small">编辑</Button>
+        <Button type="primary" size="small" onClick={()=>edit(record)}>编辑</Button>
         <Popconfirm
         title="删除确认"
         description="确定要删除吗？"
@@ -184,7 +202,7 @@ function Users() {
   ];
 
     return <div className="users">
-      <UserForm visible={isModalOpen}/>
+      <MyUserForm visible={isModalOpen} hideModal={hideModal} title={title}/>
         <Card className="search">
             <Row gutter={16}>
                 <Col span={7}>
@@ -206,9 +224,9 @@ function Users() {
             </Row>
         </Card>
         <Card className="mt">
-            <Button type="primary">新增企业</Button>
+            <Button type="primary" onClick={add}>新增企业</Button>
             <Button danger type="primary" className="ml" disabled={disabled} onClick={handleBatchDelete}>批量删除</Button>
-      </Card>
+        </Card>
       <Card className="mt">
         <Table
           dataSource={dataList}
@@ -228,9 +246,9 @@ function Users() {
         showTotal={(total) => `共${total} 条`}
         onChange={onChange}
       />
-    
+
       </Card>
     </div>
 }
-
+const MyUserForm = React.memo(UserForm);
 export default Users;
