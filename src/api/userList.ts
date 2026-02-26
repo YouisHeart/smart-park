@@ -1,4 +1,5 @@
 import { post } from "../utils/http/request";
+import type {DataType} from "../page/users/interface"
 
 interface searchType {
     page: number,
@@ -20,4 +21,9 @@ export function deleteUser(id:string) {
 // 批量删除
 export function batchDeleteUser(ids:React.Key[]) {
     return post("/batchDeleteUser",{ids})
+}
+
+// 编辑/新增 企业接口
+export function editUser(data:DataType) {
+    return post("/editUser",data)
 }

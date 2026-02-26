@@ -4,6 +4,8 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import type { DataType } from "./interface";
 import { getUserList,deleteUser,batchDeleteUser } from "../../api/userList";
 import UserForm from "./userForm";
+import { useDispatch } from "react-redux"
+import { setUserData } from "../../store/user/userSlice"
 
 const dataSource = [
   {
@@ -34,7 +36,8 @@ function Users() {
   const [loading,setLoading]=useState<boolean>(false);
   const [selectedRowKeys,setSelectedRowKeys]=useState<React.Key[]>([])
   const [isModalOpen,setIsModalOpen]=useState<boolean>(false)
-  const [title,setTitle]=useState<string>("")
+  const [title, setTitle] = useState<string>("")
+  const dispatch = useDispatch()
   const [formData,setFormData]=useState<searchType>({
     companyName:"",
     contact:"",
@@ -103,11 +106,13 @@ function Users() {
   const edit=(record:DataType)=>{
     setIsModalOpen(true)
     setTitle("编辑企业")
+    dispatch(setUserData(record))
   }
 
   const add=()=>{
     setIsModalOpen(true)
     setTitle("新增企业")
+    dispatch(setUserData({})) // 传入一个空对象，就相当于重置了
   }
 
   // const hideModal=()=>{
@@ -202,7 +207,7 @@ function Users() {
   ];
 
     return <div className="users">
-      <MyUserForm visible={isModalOpen} hideModal={hideModal} title={title}/>
+      <MyUserForm visible={isModalOpen} hideModal={hideModal} title={title} loadData={loadData} />
         <Card className="search">
             <Row gutter={16}>
                 <Col span={7}>

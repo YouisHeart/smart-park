@@ -1,22 +1,46 @@
-import { Modal,Form, Row, Col,Input,Radio } from "antd"
+import { Modal,Form, Row, Col,Input,Radio, message } from "antd"
 import { useEffect } from "react"
+import { useSelector } from "react-redux"
+import { editUser } from "../../api/userList"
 
 interface FormProps{
     visible: boolean;
     hideModal: ()=>void;
-    title:string;
+    title: string;
+    loadData: () => void;
 }
 
-function UserForm(props:FormProps) {
-    const { visible,hideModal,title } = props
+function UserForm(props: FormProps) {
+    const [form] = Form.useForm();
+    const { userData } = useSelector((state:any)=>state.userSlice)
+    const { visible, hideModal, title, loadData } = props
+    const handleOk = () => {
+        form.validateFields().then(async(res) => {
+            const { data } = await editUser(res);
+            message.success(data)
+            hideModal()
+            // 子组件新增一条数据之后让父组件更新
+            loadData()
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+    
+    // 页面一进来，对编辑的表格进行赋值
+    useEffect(() => {
+        userData.id?form.setFieldsValue(userData):form.resetFields() 
+    },[visible])
+
     return <>
         <Modal
             title={title}
             open={visible}
             onCancel={hideModal}
             width={800}
+            onOk={handleOk}
         >
             <Form
+            form={form}
             labelCol={{span:8}}
             wrapperCol={{span:16}}
             >
@@ -91,7 +115,7 @@ function UserForm(props:FormProps) {
                     <Col span={12}>
                         <Form.Item
                         label="工商注册号"
-                        name="industryName"
+                        name="industryNum"
                         rules={[{required:true,message:"工商注册号不能为空"}]}
                         >
                             <Input />
