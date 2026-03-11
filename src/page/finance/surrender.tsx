@@ -1,5 +1,13 @@
+import { Card,Button } from "antd"
+import { useNavigate } from "react-router-dom";
+
 function Surrender() {
-    return <div>我是合同详情</div>
+    const navigate=useNavigate();
+    return <div>
+        <Card>
+            <Button type="primary" onClick={()=>navigate("/finance/contract?return=true")}>返回</Button>
+        </Card>
+    </div>
 }
 
 export default Surrender;
