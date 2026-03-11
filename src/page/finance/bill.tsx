@@ -153,6 +153,14 @@ function Bill() {
     const [total,setTotal]=useState<number>(0)
     const handleChange=(value:any,dateString:any)=>{
         console.log(value,dateString)
+        setFormData(prevState=>({
+            ...prevState,
+            date:dateString
+        }))
+    }
+
+    const handleChange1=(e.React.ChangeEvent<HTMLInputElement>)=>{
+        console.log(e.target.value)
     }
 
     const onChange=(page:number,pageSize:number)=>{
@@ -181,11 +189,11 @@ function Bill() {
             <Row gutter={16}>
                 <Col span={6}>
                     <p>账单日期</p>
-                    <RangePicker name="date" style={{width:"100%"}} onChange={(e)=>handleChange}></RangePicker>
+                    <RangePicker name="date" style={{width:"100%"}} onChange={handleChange}></RangePicker>
                 </Col>
                 <Col span={6}>
                     <p>房/车号：</p>
-                    <Input placeholder="请输入门牌号或者车牌号"></Input>
+                    <Input placeholder="请输入门牌号或者车牌号" onChange={handleChange1}></Input>
                 </Col>
                 <Col span={6}>
                     <p>缴费情况</p>
